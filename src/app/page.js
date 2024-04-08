@@ -1,16 +1,24 @@
 "use client";
 
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import data from "../../src/app/data.json";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function Home() {
   const [countryId, setCountryId] = useState("");
   const [state, setState] = useState([]);
+  const [stateName,setStateName]=useState('')
+
+  const toastify=(e)=>{
+    toast("State is Selected")
+  }
+
 
   const handleChange = (e) => {
     const getCountryId = e.target.value;
     console.log(getCountryId);
-    
+
     const getStatedata = data.find(
       (country) => country.country_id === getCountryId
     ).states;
@@ -32,7 +40,7 @@ export default function Home() {
             handleChange(e);
           }}
         >
-          <option value="" className="text-center">
+          <option value="country" className="text-center">
             --Country--
           </option>
           {data.map((getCountry, index) => (
@@ -40,23 +48,37 @@ export default function Home() {
               {getCountry.country_name}
             </option>
           ))}
+          
         </select>
 
         <select
           name="states"
           id="_2"
-          className="border-[2px] border-solid border-black w-1/2 rounded-xl p-1"
+          className="border-[2px] border-solid border-black w-1/2 rounded-xl p-1" onChange={toastify}
         >
-          <option value="" className="text-center">
+          <option value="states" className="text-center">
             --State--
           </option>
           {state.map((getState, index) => (
-            <option value={getState.state_id} key={index}>
+            <option value={getState.state_id} key={index}  >
               {getState.state_name}
             </option>
           ))}
         </select>
+
       </div>
+      <ToastContainer
+        position="bottom-center"
+        autoClose={3000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
     </main>
   );
 }
