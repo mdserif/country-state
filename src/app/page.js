@@ -6,25 +6,23 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 export default function Home() {
-  const [countryId, setCountryId] = useState("");
+
   const [state, setState] = useState([]);
-  const [stateName,setStateName]=useState('')
-
-  const toastify=(e)=>{
-    toast("State is Selected")
-  }
-
 
   const handleChange = (e) => {
     const getCountryId = e.target.value;
-    console.log(getCountryId);
+    // console.log(getCountryId);
 
     const getStatedata = data.find(
       (country) => country.country_id === getCountryId
     ).states;
     setState(getStatedata);
-    //   console.log(getStatedata)
   };
+
+  const handleState=(e)=>{
+    const stateName=e.target.value
+    toast(stateName)
+  }
 
   return (
     <main className="flex flex-col w-screen h-screen p-24 bg-slate-500">
@@ -54,13 +52,13 @@ export default function Home() {
         <select
           name="states"
           id="_2"
-          className="border-[2px] border-solid border-black w-1/2 rounded-xl p-1" onChange={toastify}
+          className="border-[2px] border-solid border-black w-1/2 rounded-xl p-1" onChange={(e)=>{handleState(e)}}
         >
           <option value="states" className="text-center">
             --State--
           </option>
           {state.map((getState, index) => (
-            <option value={getState.state_id} key={index}  >
+            <option value={getState.state_name} key={index}  >
               {getState.state_name}
             </option>
           ))}
